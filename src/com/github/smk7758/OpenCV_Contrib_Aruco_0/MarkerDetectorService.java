@@ -96,24 +96,17 @@ public class MarkerDetectorService extends ScheduledService<Image> {
 
 				Aruco.drawDetectedMarkers(inputImage, corners, markerIds);
 
-				// System.out.println("------");
-				// corners.forEach(mat -> System.out.println(mat.dump()));
-
-				System.out.println("A"); // TODO
 				for (Mat corner : corners) {
 					Mat rotationMatrix = new Mat(), translationVectors = new Mat(); // 受け取る
 					List<Mat> corner_ = new ArrayList<>();
 					corner_.add(corner);
-					System.out.println("A'"); // TODO
 					Aruco.estimatePoseSingleMarkers(corner_, 0.05f, cameraMatrix, distortionCoefficients,
 							rotationMatrix, translationVectors);
-					System.out.println("B"); // TODO
 
 					for (int i = 0; i < markerIds.size().height; i++) { // TODO
 						Aruco.drawAxis(inputImage, cameraMatrix, distortionCoefficients,
 								rotationMatrix, translationVectors, 0.1f);
 					}
-					System.out.println("C"); // TODO
 				}
 
 				return convertMatToImage(inputImage);
